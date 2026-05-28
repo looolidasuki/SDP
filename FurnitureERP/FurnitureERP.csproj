@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>FurnitureERP</RootNamespace>
+    <AssemblyName>FurnitureERP</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data">
+      <HintPath>C:\Users\user\.nuget\packages\mysql.data\9.7.0\lib\net48\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Forms\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DashboardPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\SalesPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\ProductionPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\WarehousePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\FinancePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\ProcurementPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\SystemAdminPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Helpers\UITheme.cs" />
+    <Compile Include="Helpers\ChartHelper.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Helpers\GridHelper.cs" />
+    <Compile Include="..\4915M_SDP\Infrastructure\DatabaseConnect.cs">
+      <Link>Infrastructure\DatabaseConnect.cs</Link>
+    </Compile>
+    <Compile Include="..\4915M_SDP\Infrastructure\SearchFilterCriteria.cs">
+      <Link>Infrastructure\SearchFilterCriteria.cs</Link>
+    </Compile>
+    <Compile Include="..\4915M_SDP\Infrastructure\SearchQueryHelper.cs">
+      <Link>Infrastructure\SearchQueryHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Controllers\CustomerController.cs">
+      <Link>Controllers\CustomerController.cs</Link>
+    </Compile>
+    <Compile Include="..\Controllers\SalesOrderController.cs">
+      <Link>Controllers\SalesOrderController.cs</Link>
+    </Compile>
+    <Compile Include="..\Controllers\QuotationController.cs">
+      <Link>Controllers\QuotationController.cs</Link>
+    </Compile>
+    <Compile Include="..\Controllers\ProductionOrderController.cs">
+      <Link>Controllers\ProductionOrderController.cs</Link>
+    </Compile>
+    <Compile Include="..\Controllers\RawMaterialRequestNoteController.cs">
+      <Link>Controllers\RawMaterialRequestNoteController.cs</Link>
+    </Compile>
+    <Compile Include="..\Controllers\DeliveryNoteController.cs">
+      <Link>Controllers\DeliveryNoteController.cs</Link>
+    </Compile>
+    <Compile Include="..\Controllers\InvoiceController.cs">
+      <Link>Controllers\InvoiceController.cs</Link>
+    </Compile>
+    <Compile Include="..\Controllers\WarehouseController.cs">
+      <Link>Controllers\WarehouseController.cs</Link>
+    </Compile>
+    <Compile Include="..\Controllers\ProductController.cs">
+      <Link>Controllers\ProductController.cs</Link>
+    </Compile>
+    <Compile Include="..\Controllers\RawMaterialController.cs">
+      <Link>Controllers\RawMaterialController.cs</Link>
+    </Compile>
+    <Compile Include="..\Controllers\PurchaseOrderController.cs">
+      <Link>Controllers\PurchaseOrderController.cs</Link>
+    </Compile>
+    <Compile Include="..\Controllers\GoodsReceivedNoteController.cs">
+      <Link>Controllers\GoodsReceivedNoteController.cs</Link>
+    </Compile>
+    <Compile Include="..\Controllers\SupplierController.cs">
+      <Link>Controllers\SupplierController.cs</Link>
+    </Compile>
+    <Compile Include="..\Controllers\StaffController.cs">
+      <Link>Controllers\StaffController.cs</Link>
+    </Compile>
+    <Compile Include="..\Controllers\RefundRequestController.cs">
+      <Link>Controllers\RefundRequestController.cs</Link>
+    </Compile>
+    <Compile Include="..\Controllers\SystemDictionaryController.cs">
+      <Link>Controllers\SystemDictionaryController.cs</Link>
+    </Compile>
+    <Compile Include="..\Models\Customer.cs">
+      <Link>Models\Customer.cs</Link>
+    </Compile>
+    <Compile Include="..\Models\SalesOrder.cs">
+      <Link>Models\SalesOrder.cs</Link>
+    </Compile>
+    <Compile Include="..\Models\Quotation.cs">
+      <Link>Models\Quotation.cs</Link>
+    </Compile>
+    <Compile Include="..\Models\ProductionOrder.cs">
+      <Link>Models\ProductionOrder.cs</Link>
+    </Compile>
+    <Compile Include="..\Models\RawMaterialRequestNote.cs">
+      <Link>Models\RawMaterialRequestNote.cs</Link>
+    </Compile>
+    <Compile Include="..\Models\DeliveryNote.cs">
+      <Link>Models\DeliveryNote.cs</Link>
+    </Compile>
+    <Compile Include="..\Models\Invoice.cs">
+      <Link>Models\Invoice.cs</Link>
+    </Compile>
+    <Compile Include="..\Models\Product.cs">
+      <Link>Models\Product.cs</Link>
+    </Compile>
+    <Compile Include="..\Models\RawMaterial.cs">
+      <Link>Models\RawMaterial.cs</Link>
+    </Compile>
+    <Compile Include="..\Models\PurchaseOrder.cs">
+      <Link>Models\PurchaseOrder.cs</Link>
+    </Compile>
+    <Compile Include="..\Models\GoodsReceivedNote.cs">
+      <Link>Models\GoodsReceivedNote.cs</Link>
+    </Compile>
+    <Compile Include="..\Models\Supplier.cs">
+      <Link>Models\Supplier.cs</Link>
+    </Compile>
+    <Compile Include="..\Models\Staff.cs">
+      <Link>Models\Staff.cs</Link>
+    </Compile>
+    <Compile Include="..\Models\RefundRequest.cs">
+      <Link>Models\RefundRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\Models\Warehouse.cs">
+      <Link>Models\Warehouse.cs</Link>
+    </Compile>
+    <Compile Include="..\Models\Currency.cs">
+      <Link>Models\Currency.cs</Link>
+    </Compile>
+    <Compile Include="..\Models\SystemDictionary.cs">
+      <Link>Models\SystemDictionary.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
