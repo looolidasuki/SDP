@@ -1,0 +1,20 @@
+适用于 .NET Framework MSBuild 版本 18.6.3+84d3e95b4
+生成启动时间为 2026/5/28 12:54:37。
+
+项目“C:\Users\user\source\repos\4915M_claude\FurnitureERP\FurnitureERP.csproj”在节点 1 上(Build 个目标)。
+GenerateTargetFrameworkMonikerAttribute:
+正在跳过目标“GenerateTargetFrameworkMonikerAttribute”，因为所有输出文件相对于输入文件而言都是最新的。
+CoreCompile:
+正在跳过目标“CoreCompile”，因为所有输出文件相对于输入文件而言都是最新的。
+_CopyAppConfigFile:
+正在跳过目标“_CopyAppConfigFile”，因为所有输出文件相对于输入文件而言都是最新的。
+CopyFilesToOutputDirectory:
+  FurnitureERP -> C:\Users\user\source\repos\4915M_claude\FurnitureERP\bin\Debug\FurnitureERP.exe
+已完成生成项目“C:\Users\user\source\repos\4915M_claude\FurnitureERP\FurnitureERP.csproj”(Build 个目标)的操作。
+
+已成功生成。
+    0 个警告
+    0 个错误
+
+已用时间 00:00:00.21
+Exit code: 0 
