@@ -1,0 +1,107 @@
+using MySql.Data.MySqlClient;
+using Sales_user.Controllers;
+using System;
+using System.Text;
+using System.Windows.Forms;
+
+namespace FurnitureERP
+{
+    static class Program
+    {
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            if (!CheckDatabaseConnection())
+            {
+                return;
+            }
+
+            EnsureDiagnosticAccount();
+
+            Application.Run(new LoginForm());
+        }
+
+        private static bool CheckDatabaseConnection()
+        {
+            try
+            {
+                DatabaseConnect.ExecuteScalar("SELECT 1;");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    BuildDatabaseErrorMessage(ex),
+                    "Database Connection Failed",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        private static void EnsureDiagnosticAccount()
+        {
+            try
+            {
+                var staffController = new StaffController();
+                bool created = staffController.EnsureDiagnosticAccount();
+                if (created)
+                {
+                    MessageBox.Show(
+                        "Diagnostic account has been created.\nEmail: diagnostic@erp.local\nPassword: Test@123",
+                        "Diagnostic Account Ready",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Failed to initialize diagnostic account.\n" + ex.Message,
+                    "Diagnostic Account Warning",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+        }
+
+        private static string BuildDatabaseErrorMessage(Exception ex)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("Cannot connect to MySQL database at startup.");
+            sb.AppendLine();
+
+            if (ex is MySqlException mySqlEx)
+            {
+                switch (mySqlEx.Number)
+                {
+                    case 1045:
+                        sb.AppendLine("Reason: Access denied (invalid username/password).");
+                        break;
+                    case 1049:
+                        sb.AppendLine("Reason: Database 'furniture_erp_system' does not exist.");
+                        break;
+                    case 2003:
+                        sb.AppendLine("Reason: Cannot reach MySQL server (check host/port/service).");
+                        break;
+                    default:
+                        sb.AppendLine("Reason: MySQL error occurred.");
+                        break;
+                }
+                sb.AppendLine($"MySQL Error Code: {mySqlEx.Number}");
+                sb.AppendLine($"Details: {mySqlEx.Message}");
+            }
+            else
+            {
+                sb.AppendLine("Reason: Unexpected database initialization error.");
+                sb.AppendLine($"Details: {ex.Message}");
+            }
+
+            sb.AppendLine();
+            sb.AppendLine("Check App.config connection string and local MySQL service.");
+            return sb.ToString();
+        }
+    }
+}

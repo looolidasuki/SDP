@@ -1,0 +1,16 @@
+C:\Users\user\source\repos\4915M_claude\FurnitureERP\obj\Debug\FurnitureERP.csproj.AssemblyReference.cache
+C:\Users\user\source\repos\4915M_claude\FurnitureERP\obj\Debug\FurnitureERP.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\4915M_claude\FurnitureERP\bin\Debug\FurnitureERP.exe.config
+C:\Users\user\source\repos\4915M_claude\FurnitureERP\bin\Debug\FurnitureERP.exe
+C:\Users\user\source\repos\4915M_claude\FurnitureERP\bin\Debug\FurnitureERP.pdb
+C:\Users\user\source\repos\4915M_claude\FurnitureERP\bin\Debug\MySql.Data.dll
+C:\Users\user\source\repos\4915M_claude\FurnitureERP\bin\Debug\System.Memory.dll
+C:\Users\user\source\repos\4915M_claude\FurnitureERP\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\user\source\repos\4915M_claude\FurnitureERP\bin\Debug\MySql.Data.xml
+C:\Users\user\source\repos\4915M_claude\FurnitureERP\obj\Debug\Furnitur.AD12E6BE.Up2Date
+C:\Users\user\source\repos\4915M_claude\FurnitureERP\obj\Debug\FurnitureERP.exe
+C:\Users\user\source\repos\4915M_claude\FurnitureERP\obj\Debug\FurnitureERP.pdb
+C:\Users\user\source\repos\4915M_claude\file_backup\FurnitureERP_backup\obj\Debug\FurnitureERP.csproj.AssemblyReference.cache
+C:\Users\user\source\repos\4915M_claude\file_backup\FurnitureERP_backup\obj\Debug\FurnitureERP.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\4915M_claude\file_backup\FurnitureERP_backup\obj\Debug\FurnitureERP.exe
+C:\Users\user\source\repos\4915M_claude\file_backup\FurnitureERP_backup\obj\Debug\FurnitureERP.pdb

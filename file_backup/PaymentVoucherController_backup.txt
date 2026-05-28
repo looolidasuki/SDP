@@ -1,0 +1,115 @@
+using MySql.Data.MySqlClient;
+using Sales_user.Models;
+using System.Data;
+
+namespace Sales_user.Controllers
+{
+    public class PaymentVoucherController
+    {
+        public DataTable GetAllPaymentVouchers()
+        {
+            string sql = @"SELECT paymentVoucherID AS 'ID',
+                                  paymentVoucherCode AS 'Voucher Code',
+                                  invoiceID AS 'Invoice ID',
+                                  purchaseOrderID AS 'PO ID',
+                                  staffID AS 'Staff ID',
+                                  amount AS 'Amount',
+                                  paymentMethod AS 'Method',
+                                  paymentRef AS 'Reference',
+                                  status AS 'Status',
+                                  createDate AS 'Date'
+                           FROM PaymentVoucher
+                           ORDER BY createDate DESC";
+            return DatabaseConnect.ExecuteQuery(sql);
+        }
+
+        public DataTable GetMonthlyTotals()
+        {
+            string sql = @"SELECT DATE_FORMAT(createDate, '%Y-%m') AS Month,
+                                  SUM(amount) AS Total
+                           FROM PaymentVoucher
+                           WHERE status != 3
+                           GROUP BY DATE_FORMAT(createDate, '%Y-%m')
+                           ORDER BY Month DESC
+                           LIMIT 12";
+            return DatabaseConnect.ExecuteQuery(sql);
+        }
+
+        public DataTable GetMethodBreakdown()
+        {
+            string sql = @"SELECT paymentMethod AS Method,
+                                  SUM(amount) AS Total
+                           FROM PaymentVoucher
+                           WHERE status != 3
+                           GROUP BY paymentMethod";
+            return DatabaseConnect.ExecuteQuery(sql);
+        }
+
+        public PaymentVoucher GetById(long id)
+        {
+            string sql = @"SELECT paymentVoucherID, paymentVoucherCode, invoiceID, purchaseOrderID,
+                                  staffID, amount, paymentMethod, paymentRef, remark, status, createDate
+                           FROM PaymentVoucher WHERE paymentVoucherID = @id";
+            var dt = DatabaseConnect.ExecuteQuery(sql, new[] { new MySqlParameter("@id", id) });
+            if (dt == null || dt.Rows.Count == 0) return null;
+            var row = dt.Rows[0];
+            return new PaymentVoucher
+            {
+                PaymentVoucherID = System.Convert.ToInt64(row["paymentVoucherID"]),
+                PaymentVoucherCode = row["paymentVoucherCode"]?.ToString(),
+                InvoiceID = row["invoiceID"] == System.DBNull.Value ? (long?)null : System.Convert.ToInt64(row["invoiceID"]),
+                PurchaseOrderID = row["purchaseOrderID"] == System.DBNull.Value ? (long?)null : System.Convert.ToInt64(row["purchaseOrderID"]),
+                StaffID = System.Convert.ToInt64(row["staffID"]),
+                Amount = System.Convert.ToDecimal(row["amount"]),
+                PaymentMethod = System.Convert.ToInt32(row["paymentMethod"]),
+                PaymentRef = row["paymentRef"] == System.DBNull.Value ? null : row["paymentRef"].ToString(),
+                Remark = row["remark"] == System.DBNull.Value ? null : row["remark"].ToString(),
+                Status = System.Convert.ToInt32(row["status"]),
+                CreateDate = System.Convert.ToDateTime(row["createDate"])
+            };
+        }
+
+        public long Insert(PaymentVoucher pv)
+        {
+            string sql = @"INSERT INTO PaymentVoucher
+                (paymentVoucherCode, invoiceID, purchaseOrderID, staffID, amount, paymentMethod, paymentRef, remark, status)
+                VALUES (@code, @invoiceID, @poID, @staffID, @amount, @method, @ref, @remark, @status)";
+            long id = DatabaseConnect.ExecuteInsertReturnId(sql, new[] {
+                new MySqlParameter("@code", pv.PaymentVoucherCode),
+                new MySqlParameter("@invoiceID", pv.InvoiceID ?? (object)System.DBNull.Value),
+                new MySqlParameter("@poID", pv.PurchaseOrderID ?? (object)System.DBNull.Value),
+                new MySqlParameter("@staffID", pv.StaffID),
+                new MySqlParameter("@amount", pv.Amount),
+                new MySqlParameter("@method", pv.PaymentMethod),
+                new MySqlParameter("@ref", pv.PaymentRef ?? (object)System.DBNull.Value),
+                new MySqlParameter("@remark", pv.Remark ?? (object)System.DBNull.Value),
+                new MySqlParameter("@status", pv.Status)
+            });
+            if (id > 0)
+                DatabaseConnect.ExecuteNonQuery(
+                    "UPDATE PaymentVoucher SET paymentVoucherCode = @code WHERE paymentVoucherID = @id",
+                    new[] { new MySqlParameter("@code", "PV-" + id), new MySqlParameter("@id", id) });
+            return id;
+        }
+
+        public bool Update(PaymentVoucher pv)
+        {
+            string sql = @"UPDATE PaymentVoucher
+                           SET invoiceID=@invoiceID, purchaseOrderID=@poID, staffID=@staffID,
+                               amount=@amount, paymentMethod=@method, paymentRef=@ref,
+                               remark=@remark, status=@status, lastModifyDate=NOW()
+                           WHERE paymentVoucherID=@id";
+            return DatabaseConnect.ExecuteNonQuery(sql, new[] {
+                new MySqlParameter("@invoiceID", pv.InvoiceID ?? (object)System.DBNull.Value),
+                new MySqlParameter("@poID", pv.PurchaseOrderID ?? (object)System.DBNull.Value),
+                new MySqlParameter("@staffID", pv.StaffID),
+                new MySqlParameter("@amount", pv.Amount),
+                new MySqlParameter("@method", pv.PaymentMethod),
+                new MySqlParameter("@ref", pv.PaymentRef ?? (object)System.DBNull.Value),
+                new MySqlParameter("@remark", pv.Remark ?? (object)System.DBNull.Value),
+                new MySqlParameter("@status", pv.Status),
+                new MySqlParameter("@id", pv.PaymentVoucherID)
+            }) > 0;
+        }
+    }
+}
