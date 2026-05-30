@@ -1,5 +1,6 @@
 using MySql.Data.MySqlClient;
 using Sales_user.Controllers;
+using FurnitureERP.Helpers;
 using System;
 using System.Text;
 using System.Windows.Forms;
@@ -13,6 +14,9 @@ namespace FurnitureERP
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // PDF 导出依赖字体解析器（避免 Segoe UI 缺失导致导出失败）
+            PdfSharpFontResolver.EnsureRegistered();
 
             if (!CheckDatabaseConnection())
             {

@@ -79,6 +79,12 @@ namespace FurnitureERP.Forms
             var pnlOut = UITheme.CreateCard("Total Expenses"); pnlOut.Controls.Add(_lblTotalExpense);
             var pnlNet = UITheme.CreateCard("Net Cash Flow"); pnlNet.Controls.Add(_lblNetFlow);
 
+            var btnReport = UITheme.CreateSecondaryButton("Print Report PDF");
+            btnReport.Dock = DockStyle.Bottom;
+            btnReport.Height = 34;
+            btnReport.Click += (s, e) => ExportDashboardReportPdf();
+            pnlNet.Controls.Add(btnReport);
+
             cardPanel.Controls.Add(pnlIn, 0, 0);
             cardPanel.Controls.Add(pnlOut, 1, 0);
             cardPanel.Controls.Add(pnlNet, 2, 0);
@@ -103,6 +109,31 @@ namespace FurnitureERP.Forms
 
             mainLayout.Controls.Add(chartLayout, 0, 1); // 💡 修正索引，將圖表佈局放入 mainLayout 的第二行
             page.Controls.Add(mainLayout);
+        }
+
+        private void ExportDashboardReportPdf()
+        {
+            var fields = new DataTable();
+            fields.Columns.Add("Field");
+            fields.Columns.Add("Value");
+            fields.Rows.Add("Total Income", _lblTotalIncome?.Text ?? "");
+            fields.Rows.Add("Total Expenses", _lblTotalExpense?.Text ?? "");
+            fields.Rows.Add("Net Cash Flow", _lblNetFlow?.Text ?? "");
+            fields.Rows.Add("Report Scope", "Dashboard summary (charts displayed in app)");
+
+            try
+            {
+                var data = DetailViewHelper.FromFieldValueTable(
+                    "Finance Dashboard Report",
+                    fields,
+                    null,
+                    "Finance_Dashboard_Report");
+                PdfExportHelper.ExportToPdf(data, this);
+            }
+            catch (Exception ex)
+            {
+                UITheme.ShowError("Failed to export PDF: " + ex.Message);
+            }
         }
 
         private void BuildPVTab(TabPage page)
